@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  input(type='file' multiple id='input')
+  ul#uploadList
+  script.
+    {
+      let worker = new Worker('/javascripts/upload.js')
+      function handleFiles(e) {
+        var files = e.target.files
+        var htmlStr = ''
+        for (let file of files) {
+          htmlStr += `<li>文件名:${file.name}, 文件大小:${file.size}, 更改日期: ${file.lastModifiedDate.toLocaleDateString()}</li>`
+        }
+        uploadList.innerHTML = htmlStr
+        worker.postMessage({
+          files: files
+        })
+      }
+      input.addEventListener('change', handleFiles, false)
+    }
