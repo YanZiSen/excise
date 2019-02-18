@@ -12,6 +12,12 @@ block content
         var files = e.target.files
         var htmlStr = ''
         for (let file of files) {
+          console.log('file', file)
+          const fileRa = new FileReader()
+          fileRa.readAsText(file)
+          fileRa.onload = function (e) {
+              console.log('fileContent', e.target.result);
+          }
           htmlStr += `<li>文件名:${file.name}, 文件大小:${file.size}, 更改日期: ${file.lastModifiedDate.toLocaleDateString()}</li>`
         }
         uploadList.innerHTML = htmlStr
