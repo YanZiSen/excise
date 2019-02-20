@@ -2,6 +2,7 @@ var files = []
 self.onmessage = function (e) {
   console.log(e.data.files)
   files = e.data.files
+  process(files)
 }
 function upload (blobFile) {
   var xhr = new XMLHttpRequest()
@@ -11,6 +12,17 @@ function upload (blobFile) {
   }
   xhr.send(blobFile)
 }
-function process () {
-
+function process (fileList) {
+  for (let file of fileList) {
+    let fileSplit
+    let start = 0
+    let end = 1024 * 50
+    const step = 1024 * 50
+    while (end < file.size) {
+      fileSplit = file.slice(start, end)
+      upload(fileSplit)
+      start = end
+      end += step
+    }
+  }
 }

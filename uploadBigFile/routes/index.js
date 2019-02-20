@@ -6,4 +6,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.post('/upload', function (req, res, next) {
+  // console.log(req.body)
+  req.on("data", function(chunk){
+    console.log('chunk', chunk)
+      res.send({})
+  })
+});
 module.exports = router;
