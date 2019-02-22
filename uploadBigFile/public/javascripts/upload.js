@@ -20,6 +20,10 @@ function process (fileList) {
     const step = 1024 * 50
     while (end < file.size) {
       fileSplit = file.slice(start, end)
+      const sendObj = {
+        fileName: file.fileName,
+        fileContent: fileSplit
+      }
       upload(fileSplit)
       start = end
       end += step
